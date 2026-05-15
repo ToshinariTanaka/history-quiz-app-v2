@@ -85,3 +85,28 @@
 
 ## チャッピーに相談すべき点
 - 画像付き問題を増やす際の `id` 採番ルール（時代別に分けるか、単純連番か）を決める。
+
+---
+
+## 今回やったこと
+- 時代指定・範囲出題の判定ロジックを確認し、`range-mode` は `item.era` で絞り込み、時代指定（〜から出題）は `item.era` の最初の一致位置を起点に `slice` する実装であることを確認。
+- `id:304`（`era: "明治"`）が末尾にあると配列順依存の処理（開始時代からの `slice` や時代表示順）に影響し得るため、`id` と内容を変更せず `明治` 問題群内へ移動。
+
+## 変更ファイル
+- quiz-data_rekishi3.json
+- docs/codex_report.md
+
+## テスト結果
+- `node --check script.js`: OK
+- `node -e "const fs=require('fs'); JSON.parse(fs.readFileSync('quiz-data_rekishi3.json','utf8')); console.log('json ok')"`: OK
+- `node -e "const fs=require('fs'); const d=JSON.parse(fs.readFileSync('quiz-data_rekishi3.json','utf8')); const i304=d.findIndex(x=>x.id===304); const i262=d.findIndex(x=>x.id===262); const i263=d.findIndex(x=>x.id===263); console.log({i304,i262,i263,era304:d[i304]?.era});"`: OK（`id:304` が `id:262` と `id:263` の間に移動）
+
+## 注意点
+- `item.era` に依存したフィルタは維持しており、仕様変更はしていない（今回はデータ順の整合のみ）。
+- 配列順を使う「〜から出題」は、将来的にも時代順データを前提とするため、新規追加時は挿入位置に注意が必要。
+
+## 次にやるべきこと
+- 新規問題追加フローに「eraに応じた挿入位置チェック」を入れる（簡易スクリプト化推奨）。
+
+## チャッピーに相談すべき点
+- `startEra` の起点計算を配列順ではなく、時代定義テーブル順にするか（データ順依存の恒久対策）。
