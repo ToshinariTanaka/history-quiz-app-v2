@@ -297,6 +297,23 @@ h1 {
   word-break: break-word;
 }
 
+.question-image-container {
+  margin: 0 0 18px;
+  padding: 10px;
+  border-radius: 18px;
+  border: 2px solid #c7d2e6;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(238,243,251,0.95));
+}
+
+.question-image {
+  display: block;
+  width: 100%;
+  max-height: min(48vh, 360px);
+  object-fit: contain;
+  border-radius: 12px;
+  margin: 0 auto;
+}
+
 .choices {
   display: grid;
   grid-template-columns: 1fr;

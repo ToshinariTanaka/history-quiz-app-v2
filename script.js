@@ -8,6 +8,8 @@ const choicesEl = document.getElementById("choices")
 const resultEl = document.getElementById("result")
 const summaryEl = document.getElementById("summary")
 const progressEl = document.getElementById("progress")
+const questionImageContainerEl = document.getElementById("question-image-container")
+const questionImageEl = document.getElementById("question-image")
 
 const scoreDisplayEl = document.getElementById("score-display")
 const comboDisplayEl = document.getElementById("combo-display")
@@ -952,6 +954,37 @@ function updateProgress(answeredThisQuestion = false) {
   `
 }
 
+
+function hideQuestionImage() {
+  if (!questionImageContainerEl || !questionImageEl) {
+    return
+  }
+
+  questionImageEl.removeAttribute("src")
+  questionImageEl.alt = "問題画像"
+  questionImageEl.onerror = null
+  questionImageContainerEl.classList.add("hidden")
+}
+
+function renderQuestionImage(item) {
+  if (!questionImageContainerEl || !questionImageEl) {
+    return
+  }
+
+  const imageFileName = typeof item.image === "string" ? item.image.trim() : ""
+  if (!imageFileName) {
+    hideQuestionImage()
+    return
+  }
+
+  questionImageEl.onerror = () => {
+    hideQuestionImage()
+  }
+  questionImageEl.alt = item.imageAlt || "問題画像"
+  questionImageEl.src = `assets/question-images/${imageFileName}`
+  questionImageContainerEl.classList.remove("hidden")
+}
+
 function getCurrentQuestion() {
   return activeQuestions[currentIndex]
 }
@@ -967,6 +1000,7 @@ function renderQuestion() {
   clearSummary()
   updateModeBadge()
   questionEl.textContent = item.question
+  renderQuestionImage(item)
   eraEl.textContent = item.era || ""
   eraEl.classList.toggle("hidden", !item.era)
 
