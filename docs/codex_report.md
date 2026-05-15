@@ -58,3 +58,30 @@
 
 ## チャッピーに相談すべき点
 - 画像確認用問題を本番データと分離する運用（検証用JSONを分けるかどうか）。
+
+---
+
+## 今回やったこと
+- `quiz-data_rekishi3.json` に、遼東半島（A〜D）を問う三国干渉の画像付き問題を 1 問追加（`id:304`）。
+- 追加問題に `image: "ryotou-demo-map.svg"` と `imageAlt` を設定。
+- `id:1` と `id:33` に `image` / `imageAlt` がないことを再確認。
+- `script.js` の画像表示処理は変更せず、構文チェックのみ実施。
+
+## 変更ファイル
+- quiz-data_rekishi3.json
+- docs/codex_report.md
+
+## テスト結果
+- `node --check script.js`: OK
+- `node -e "const fs=require('fs'); JSON.parse(fs.readFileSync('quiz-data_rekishi3.json','utf8')); console.log('json ok');"`: OK
+- `node -e "const fs=require('fs'); const d=JSON.parse(fs.readFileSync('quiz-data_rekishi3.json','utf8')); const q=d.find(x=>x.id===304); console.log('id304',!!q,'image',q&&q.image); const q1=d.find(x=>x.id===1); const q33=d.find(x=>x.id===33); console.log('id1_has_image',q1&&('image' in q1 || 'imageAlt' in q1)); console.log('id33_has_image',q33&&('image' in q33 || 'imageAlt' in q33));"`: OK
+
+## 注意点
+- 今回はデータ追加のみで、スコア・コンボ・ライフ・正誤判定・結果画面ロジックは未変更。
+- ブラウザでの実画面確認（画像が問題文の下・選択肢の上に表示されること）は、このCLI環境では未実施。
+
+## 次にやるべきこと
+- ブラウザで `id:304` の問題が出題されるまで進め、表示位置と代替テキストを目視確認する。
+
+## チャッピーに相談すべき点
+- 画像付き問題を増やす際の `id` 採番ルール（時代別に分けるか、単純連番か）を決める。
