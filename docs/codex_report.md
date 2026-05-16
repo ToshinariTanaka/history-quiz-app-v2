@@ -256,3 +256,31 @@
 
 ## チャッピーに相談すべき点
 - 超小型端末（420px以下）でのボタン高さ優先順位を、可読性重視（64px維持）か、コンパクト重視（54px寄せ）か最終判断する。
+
+---
+
+## 今回やったこと
+- スマホ向けボタンサイズを最終調整し、`@media (max-width: 600px)` と `@media (max-width: 420px)` の両方で選択肢ボタンの高さ・余白・文字サイズをコンパクト化（`48px / 8px 12px / 0.95rem`）して、超小型端末でも大きく戻らないよう統一。
+- スマホで問題表示直後のスクロール位置を、カード中央寄せではなく問題文（`#question`）基準に寄せるように調整し、問題文上部が見えにくい状態を緩和。
+- 画像サイズ関連のスタイルには変更を入れず、既存の画像表示サイズを維持。
+
+## 変更ファイル
+- style.css
+- script.js
+- docs/codex_report.md
+
+## テスト結果
+- `node --check script.js`: OK
+- `rg -n "@media \(max-width: 600px\)|@media \(max-width: 420px\)|\.choice-btn|scrollToFirstQuestionWithBounce|extraOffset|targetEl" style.css script.js`: OK
+- `git diff -- style.css script.js docs/codex_report.md`: OK（変更範囲がUI微調整中心であることを確認）
+
+## 注意点
+- CLI環境のため、実機スマホ（iOS Safari/Android Chrome）での最終目視確認は未実施。
+- スクロール挙動はブラウザUI（アドレスバー展開状態）により体感差が出るため、必要なら `extraOffset`（現在スマホ24px）を端末確認後に微調整。
+
+## 次にやるべきこと
+- 実機で画像あり/なし両方の問題を連続表示し、問題文先頭の見え方と選択肢タップしやすさを確認。
+- 必要なら `@media (max-width: 420px)` のフォントサイズのみ 0.93〜0.95rem で最終調整。
+
+## チャッピーに相談すべき点
+- スクロール位置の最終仕様を「常に問題文優先（現状）」で固定するか、「問題文+進捗チップ全体が見える位置」に寄せるか。

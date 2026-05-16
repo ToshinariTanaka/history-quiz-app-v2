@@ -741,15 +741,15 @@ button:disabled {
   }
 
   .choices {
-    gap: 10px;
-    margin-bottom: 10px;
+    gap: 8px;
+    margin-bottom: 8px;
   }
 
   .choice-btn,
   button {
-    min-height: 54px;
-    padding: 10px 14px;
-    font-size: 1rem;
+    min-height: 48px;
+    padding: 8px 12px;
+    font-size: 0.95rem;
   }
 }
 
@@ -773,8 +773,9 @@ button:disabled {
 
   .choice-btn,
   button {
-    min-height: 64px;
-    font-size: 1.02rem;
+    min-height: 48px;
+    padding: 8px 12px;
+    font-size: 0.95rem;
   }
 
   .progress {
