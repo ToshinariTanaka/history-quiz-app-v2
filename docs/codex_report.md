@@ -1,4 +1,33 @@
 ## 今回やったこと
+- `style.css` の `.question-image-container` / `.question-image` 周辺のみを調整し、スマホ幅で表示枠に `aspect-ratio: 16 / 9` を指定する方式へ変更。
+- 画像自体は `object-fit: contain` を維持し、画像内容を歪ませず枠内に全体表示する挙動へ統一。
+- PC側の見た目を大きく崩さないよう、通常幅では既存のカード装飾を維持しつつ `width: 100%` ベース表示に整理。
+
+## 変更ファイル
+- style.css
+- docs/codex_report.md
+- docs/project_status.md
+
+## テスト結果
+- `rg -n "question-image-container|question-image|@media \(max-width: 600px\)" style.css`: OK
+- `git diff -- style.css`: OK（指定範囲のみ変更を確認）
+- `python -m playwright --version`: NG（本環境に playwright 未導入のためスクリーンショット自動取得は未実施）
+
+## 注意点
+- 実機スマホでの最終目視（問題文→画像→選択肢の可読性）はこのCLI環境では未実施。
+- `aspect-ratio` はモダンブラウザ前提のため、古いブラウザでは従来レイアウトに近い見え方になる可能性あり。
+- UI変更のため、PRレビュー時にスクリーンショット添付（スマホ幅/PC幅）で確認することを推奨。
+
+## 次にやるべきこと
+- iOS/Android 実機で 16:9 枠の体感確認（縦スクロール量、選択肢到達性）を実施。
+- 端末によって 16:9 が広すぎる場合は 3:2 など候補比率を A/B 比較。
+
+## チャッピーに相談すべき点
+- スマホ時の画像枠アスペクト比を `16 / 9` で固定するか、問題種別に応じて `4 / 3` と使い分けるか。
+
+---
+
+## 今回やったこと
 - スマホ表示で問題画像が大きすぎる課題に対し、`.question-image` のデフォルト幅を `width: auto` に変更して強制的な全幅表示を解除。
 - `@media (max-width: 600px)` で `.question-image` の `max-height` を `220px` に設定し、スマホでの画像縦幅を確実に抑制。
 - スマホ向けの `.question-image-container` 余白を微調整し、問題文→画像→選択肢の見通しを改善。
