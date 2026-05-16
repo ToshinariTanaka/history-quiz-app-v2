@@ -340,3 +340,29 @@
 
 ## チャッピーに相談すべき点
 - スクロール位置の最終仕様を「常に問題文優先（現状）」で固定するか、「問題文+進捗チップ全体が見える位置」に寄せるか。
+
+---
+
+## 今回やったこと
+- `question-editor.js` の行選択クリック処理をイベント委譲に変更し、`input/textarea/button` クリック時は `renderTable()` を呼ばずに `selectedIndex` 更新＋`renderPreview()`＋`updateDerived()` のみ行うよう修正。
+- 削除ボタンは `data-action="delete"` を使う分岐にし、削除時のみ `renderTable()` を実行するよう統一。
+- 各行 `tr` に `data-index` を付与し、再描画せずに安全に対象行を判定できるように調整。
+
+## 変更ファイル
+- question-editor.js
+- docs/codex_report.md
+
+## テスト結果
+- `node --check question-editor.js`: OK
+- `git diff -- question-editor.js`: OK（input/textareaクリック時に `renderTable()` を呼ばない分岐へ変更されていることを確認）
+
+## 注意点
+- 本CLI環境ではブラウザUIの実操作確認・スクリーンショット取得は未実施。
+- `input` イベント時は従来どおり `updateDerived()` のみを呼ぶ実装で、`renderTable()` は呼ばれない。
+
+## 次にやるべきこと
+- ブラウザで未選択行の `textarea` を直接クリックし、フォーカスが維持されることを目視確認。
+- 削除操作時のみ再描画されること（選択行ハイライトが更新されること）を確認。
+
+## チャッピーに相談すべき点
+- 入力中にプレビューもリアルタイム更新したいか（現状はクリック時更新中心）を仕様として確定する。
