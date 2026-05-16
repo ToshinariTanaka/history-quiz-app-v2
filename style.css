@@ -308,7 +308,7 @@ h1 {
 .question-image {
   display: block;
   max-width: 100%;
-  width: 100%;
+  width: auto;
   max-height: min(40vh, 320px);
   object-fit: contain;
   height: auto;
@@ -718,12 +718,15 @@ button:disabled {
 
 @media (max-width: 600px) {
   .question-image-container {
-    margin: 10px 0 14px;
-    padding: 8px;
+    margin: 8px 0 12px;
+    padding: 6px;
   }
 
   .question-image {
-    max-height: min(34vh, 260px);
+    width: auto;
+    max-width: 100%;
+    max-height: 220px;
+    height: auto;
   }
 }
 

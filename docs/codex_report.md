@@ -1,4 +1,33 @@
 ## 今回やったこと
+- スマホ表示で問題画像が大きすぎる課題に対し、`.question-image` のデフォルト幅を `width: auto` に変更して強制的な全幅表示を解除。
+- `@media (max-width: 600px)` で `.question-image` の `max-height` を `220px` に設定し、スマホでの画像縦幅を確実に抑制。
+- スマホ向けの `.question-image-container` 余白を微調整し、問題文→画像→選択肢の見通しを改善。
+- `quiz.html` の `style.css` 読み込みにキャッシュバスター（`?v=20260516-image-height-2`）を追加。
+
+## 変更ファイル
+- style.css
+- quiz.html
+- docs/codex_report.md
+- docs/project_status.md
+
+## テスト結果
+- `rg -n "question-image|question-image-container|@media \(max-width: 600px\)" style.css quiz.html`: OK
+- `git diff -- style.css quiz.html`: OK（指定ファイルに限定して変更確認）
+
+## 注意点
+- CLI環境のため実機スマホでのレンダリング目視確認は未実施。
+- 画像の見え方は端末の実効表示領域（ブラウザUI含む）により若干差が出る可能性あり。
+
+## 次にやるべきこと
+- iOS/Android 実機で、画像付き問題表示時に「問題文→画像→選択肢」が1画面で読みやすいか確認。
+- PC幅で画像が小さくなりすぎていないかを確認。
+
+## チャッピーに相談すべき点
+- スマホ時の `max-height: 220px` を固定するか、`min(34vh, 220px)` のような端末依存吸収型にするか最終決定。
+
+---
+
+## 今回やったこと
 - `style.css` の `.question-image` に `max-height` と `object-fit: contain` を追加し、画像の縦横比を維持したまま表示高さを制御。
 - `style.css` に `@media (max-width: 600px)` を追加し、スマホ幅で `.question-image` の最大高さをさらに抑制。
 - スマホ幅で `.question-image-container` の余白を微調整し、問題文→画像→選択肢の見通しを改善。
