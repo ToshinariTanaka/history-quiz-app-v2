@@ -1,4 +1,29 @@
 ## 今回やったこと
+- `question-editor.html` の問題一覧テーブルヘッダーを整理し、`image` / `imageAlt` を含む新ヘッダー1行のみが残るように修正。
+- 旧ヘッダー（`image` / `imageAlt` なし）の重複行を削除する方針で、thead の定義を正しい1セットへ統一。
+
+## 変更ファイル
+- question-editor.html
+- docs/codex_report.md
+
+## テスト結果
+- `rg -n "<thead>|<th>image</th>|<th>imageAlt</th>|<th>answer</th>" question-editor.html`: OK
+- `python - <<'PY' ...`（`question-editor.html` 内の `<thead><tr>` 数と `<th>` 個数確認）: OK
+- `git diff -- question-editor.html`: OK（thead 部分のみ変更）
+
+## 注意点
+- `question-editor.js` / `question-editor.css` は依頼どおり未変更。
+- 本CLI環境ではブラウザ目視スクリーンショット取得は未実施。
+
+## 次にやるべきこと
+- ブラウザで `question-editor.html` を開き、見出し順と列対応（image / imageAlt 列の編集UI）が一致するかを最終確認。
+
+## チャッピーに相談すべき点
+- 現状なし。
+
+---
+
+## 今回やったこと
 - `style.css` の `.question-image-container` / `.question-image` 周辺のみを調整し、スマホ幅で表示枠に `aspect-ratio: 16 / 9` を指定する方式へ変更。
 - 画像自体は `object-fit: contain` を維持し、画像内容を歪ませず枠内に全体表示する挙動へ統一。
 - PC側の見た目を大きく崩さないよう、通常幅では既存のカード装飾を維持しつつ `width: 100%` ベース表示に整理。
