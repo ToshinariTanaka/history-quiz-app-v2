@@ -1,4 +1,30 @@
 ## 今回やったこと
+- `style.css` の `.question-image` に `max-height` と `object-fit: contain` を追加し、画像の縦横比を維持したまま表示高さを制御。
+- `style.css` に `@media (max-width: 600px)` を追加し、スマホ幅で `.question-image` の最大高さをさらに抑制。
+- スマホ幅で `.question-image-container` の余白を微調整し、問題文→画像→選択肢の見通しを改善。
+
+## 変更ファイル
+- style.css
+- docs/codex_report.md
+
+## テスト結果
+- `rg -n "question-image-container|question-image|@media \(max-width: 600px\)" style.css`: OK
+- `git diff -- style.css`: OK（指定範囲のみ変更を確認）
+
+## 注意点
+- 本CLI環境では実機スマホでの目視確認（レンダリング確認）は未実施。
+- `max-height` は `vh` 依存のため、機種ごとのアドレスバー表示状態で体感差が出る可能性あり。
+
+## 次にやるべきこと
+- 実機スマホ（iOS/Android）で、画像付き問題時の「問題文→画像→選択肢」の可読性を確認。
+- PC幅で画像が小さくなりすぎていないかを主要ブラウザで確認。
+
+## チャッピーに相談すべき点
+- スマホ時の `max-height` を `34vh` のまま固定するか、端末別に 32〜36vh で最適化するか。
+
+---
+
+## 今回やったこと
 - `script.js` の画像描画処理を調整し、`image` がある場合のみ `assets/question-images/${imageFileName}` を組み立てて描画する前提を維持したまま、`imageAlt` の空文字対策とファイル名エンコードを追加。
 - `style.css` の問題画像スタイルを仕様に合わせて調整（`max-width: 100%`, `height: auto`, 角丸、薄い枠、上下余白）。
 - `docs/project_status.md` を新規作成。

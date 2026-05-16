@@ -309,6 +309,8 @@ h1 {
   display: block;
   max-width: 100%;
   width: 100%;
+  max-height: min(40vh, 320px);
+  object-fit: contain;
   height: auto;
   border-radius: 10px;
   margin: 4px auto;
@@ -710,6 +712,18 @@ button:disabled {
 
   #question {
     font-size: clamp(1.5rem, 5.8vw, 2rem);
+  }
+}
+
+
+@media (max-width: 600px) {
+  .question-image-container {
+    margin: 10px 0 14px;
+    padding: 8px;
+  }
+
+  .question-image {
+    max-height: min(34vh, 260px);
   }
 }
 
