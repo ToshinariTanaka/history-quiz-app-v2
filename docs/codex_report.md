@@ -1,4 +1,36 @@
 ## 今回やったこと
+- `script.js` の画像描画処理を調整し、`image` がある場合のみ `assets/question-images/${imageFileName}` を組み立てて描画する前提を維持したまま、`imageAlt` の空文字対策とファイル名エンコードを追加。
+- `style.css` の問題画像スタイルを仕様に合わせて調整（`max-width: 100%`, `height: auto`, 角丸、薄い枠、上下余白）。
+- `docs/project_status.md` を新規作成。
+- `README.md` を新規作成し、画像付き問題仕様を明文化。
+
+## 変更ファイル
+- script.js
+- style.css
+- docs/codex_report.md
+- docs/project_status.md
+- README.md
+
+## テスト結果
+- `node --check script.js`: OK
+- `node -e "const fs=require('fs'); const d=JSON.parse(fs.readFileSync('quiz-data_rekishi3.json','utf8')); const q=d.find(x=>x.id===304); console.log(!!q, q.image, q.imageAlt);"`: OK
+- `rg -n "question-image-container|question-image" quiz.html style.css script.js`: OK
+- `rg -n "assets/question-images/|encodeURIComponent\(imageFileName\)" script.js`: OK
+
+## 注意点
+- CLI環境のため GitHub Pages 上での直接表示確認、および実ブラウザでのUI目視確認は未実施。
+- 画像表示の検証は `id:304` が出題される条件（対象時代・問題数）で実施する必要がある。
+
+## 次にやるべきこと
+- GitHub Pages 本番URLで `assets/question-images/ryotou-demo-map.svg` の直アクセス確認を行う。
+- `id:304` 出題時に「問題文の下・選択肢の上」に表示されることを実機（スマホ幅含む）で確認する。
+
+## チャッピーに相談すべき点
+- `imageAlt` 未設定時の既定値を「空文字」に統一するか「問題画像」に統一するか最終決定。
+
+---
+
+## 今回やったこと
 - 問題画像の読み込み方式を「データはファイル名のみ、実体は assets/question-images/ 配下」に変更。
 - image未設定時・読込失敗時に画像エリアを非表示化。
 - quiz.html に question-image-container / question-image を追加。

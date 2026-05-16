@@ -980,8 +980,8 @@ function renderQuestionImage(item) {
   questionImageEl.onerror = () => {
     hideQuestionImage()
   }
-  questionImageEl.alt = item.imageAlt || "問題画像"
-  questionImageEl.src = `assets/question-images/${imageFileName}`
+  questionImageEl.alt = typeof item.imageAlt === "string" && item.imageAlt.trim() ? item.imageAlt.trim() : "問題画像"
+  questionImageEl.src = `assets/question-images/${encodeURIComponent(imageFileName)}`
   questionImageContainerEl.classList.remove("hidden")
 }
 
