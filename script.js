@@ -150,7 +150,9 @@ function scrollToFirstQuestionWithBounce() {
 
   window.requestAnimationFrame(() => {
     window.setTimeout(() => {
-      const top = quizCardEl.getBoundingClientRect().top + window.scrollY - 12
+      const targetEl = questionEl || quizCardEl
+      const extraOffset = window.matchMedia("(max-width: 600px)").matches ? 24 : 12
+      const top = targetEl.getBoundingClientRect().top + window.scrollY - extraOffset
       window.scrollTo({ top: Math.max(0, top), behavior })
 
       if (!reduceMotion) {
