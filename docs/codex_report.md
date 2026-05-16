@@ -1,4 +1,35 @@
 ## 今回やったこと
+- `question-editor.js` を新規追加し、JSON/Excel/CSV の読込・出力、`wrongChoices` ⇔ `wrong1-3` 変換、空 `id` 自動採番、JSON候補管理（追加/削除/初期化）を実装。
+- `question-editor.css` を新規追加し、テーブル編集UI/プレビュー/ツールバーの基本スタイルを実装。
+- `question-editor.html` のテーブル見出し（`id / era / question / image / imageAlt / answer / wrong1 / wrong2 / wrong3 / explanation / 操作`）が重複なく維持されていることを確認。
+
+## 変更ファイル
+- question-editor.js
+- question-editor.css
+- docs/codex_report.md
+- docs/project_status.md
+- README.md
+
+## テスト結果
+- `test -f question-editor.html && test -f question-editor.js && test -f question-editor.css`: OK
+- `node --check question-editor.js`: OK
+- `python - <<'PY' ...`（question-editor.html の th 順序確認）: OK
+- `git diff --name-only`: OK（クイズ本体 `script.js` / `style.css` / `quiz-data_rekishi3.json` は未変更）
+
+## 注意点
+- このCLI環境ではブラウザ実行確認とスクリーンショット取得は未実施。
+- `question-editor.js` は SheetJS CDN（`XLSX` グローバル）前提で動作する。
+
+## 次にやるべきこと
+- ブラウザで `question-editor.html` を開き、読込/出力/プレビュー/候補管理の実操作確認を実施。
+- 実データを使って Excel/CSV/JSON の往復で列崩れがないかを確認。
+
+## チャッピーに相談すべき点
+- JSON候補の初期値セットを1件固定（`quiz-data_rekishi3.json`）でよいか、複数デフォルト候補にするか。
+
+---
+
+## 今回やったこと
 - `question-editor.html` の問題一覧テーブルヘッダーを整理し、`image` / `imageAlt` を含む新ヘッダー1行のみが残るように修正。
 - 旧ヘッダー（`image` / `imageAlt` なし）の重複行を削除する方針で、thead の定義を正しい1セットへ統一。
 
