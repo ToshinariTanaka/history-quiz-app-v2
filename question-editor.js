@@ -72,8 +72,8 @@
     el.editorBody.innerHTML = '';
     state.rows.forEach((row, index) => {
       const tr = document.createElement('tr');
+      tr.dataset.index = String(index);
       if (index === state.selectedIndex) tr.classList.add('selected');
-      tr.addEventListener('click', () => { state.selectedIndex = index; renderTable(); renderPreview(); });
 
       COLUMNS.forEach((key) => {
         const td = document.createElement('td');
@@ -87,14 +87,7 @@
       del.type = 'button';
       del.textContent = '削除';
       del.className = 'danger';
-      del.addEventListener('click', (ev) => {
-        ev.stopPropagation();
-        state.rows.splice(index, 1);
-        if (state.selectedIndex >= state.rows.length) state.selectedIndex = state.rows.length - 1;
-        updateDerived();
-        renderTable();
-        renderPreview();
-      });
+      del.dataset.action = 'delete';
       actions.appendChild(del);
       tr.appendChild(actions);
       el.editorBody.appendChild(tr);
@@ -173,6 +166,36 @@
     el.targetSelect.value = state.jsonOptions.includes(current) ? current : state.jsonOptions[0];
     updateDerived();
   };
+
+
+  el.editorBody.addEventListener('click', (event) => {
+    const tr = event.target.closest('tr[data-index]');
+    if (!tr) return;
+    const index = Number(tr.dataset.index);
+
+    if (event.target.matches('[data-action="delete"]')) {
+      state.rows.splice(index, 1);
+      if (state.selectedIndex >= state.rows.length) {
+        state.selectedIndex = state.rows.length - 1;
+      }
+      renderTable();
+      renderPreview();
+      updateDerived();
+      return;
+    }
+
+    state.selectedIndex = index;
+
+    if (event.target.matches('input, textarea, button')) {
+      renderPreview();
+      updateDerived();
+      return;
+    }
+
+    renderTable();
+    renderPreview();
+    updateDerived();
+  });
 
   el.importFile.addEventListener('change', async () => {
     const file = el.importFile.files?.[0];
