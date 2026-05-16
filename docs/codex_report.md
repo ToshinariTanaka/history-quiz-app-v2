@@ -226,3 +226,33 @@
 
 ## チャッピーに相談すべき点
 - `startEra` の起点計算を配列順ではなく、時代定義テーブル順にするか（データ順依存の恒久対策）。
+
+---
+
+## 今回やったこと
+- スマホ幅（`@media (max-width: 600px)`）限定で、画像付き問題向けに表示をコンパクト化。
+- 問題文サイズを `clamp(1.05rem, 4.3vw, 1.3rem)` に変更し、行間・余白も縮小。
+- 画像枠を `aspect-ratio: 2 / 1` に変更し、`object-fit: contain` で歪みなく枠内表示を維持。
+- 選択肢リストの間隔とボタン高さをやや縮小して、縦スクロール量を軽減。
+- `quiz.html` の `style.css` 読み込みにキャッシュバスターを追加。
+
+## 変更ファイル
+- style.css
+- quiz.html
+- docs/codex_report.md
+
+## テスト結果
+- `rg -n "@media \(max-width: 600px\)|#question|question-image-container|\.choices|\.choice-btn" style.css`: OK
+- `rg -n "style.css\?v=20260516-mobile-compact-1" quiz.html`: OK
+- `git diff -- style.css quiz.html`: OK（変更範囲が意図どおり小さいことを確認）
+
+## 注意点
+- CLI環境のため、iPhone Safari 実機での最終目視確認は未実施。
+- `@media (max-width: 420px)` の既存ルールで `min-height: 64px` が残っているため、超小型端末ではボタン高さが600pxルールより優先される。
+
+## 次にやるべきこと
+- iPhone Safari 実機で、画像あり/画像なし問題それぞれの可読性を確認。
+- 必要なら `@media (max-width: 420px)` 側のボタン高さも 54px 系に合わせて微調整。
+
+## チャッピーに相談すべき点
+- 超小型端末（420px以下）でのボタン高さ優先順位を、可読性重視（64px維持）か、コンパクト重視（54px寄せ）か最終判断する。

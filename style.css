@@ -716,10 +716,20 @@ button:disabled {
 
 
 @media (max-width: 600px) {
+  .quiz-card {
+    padding: 12px;
+  }
+
+  #question {
+    margin: 6px 0 12px;
+    font-size: clamp(1.05rem, 4.3vw, 1.3rem);
+    line-height: 1.42;
+  }
+
   .question-image-container {
-    margin: 8px 0 12px;
-    padding: 6px;
-    aspect-ratio: 16 / 9;
+    margin: 6px 0 10px;
+    padding: 5px;
+    aspect-ratio: 2 / 1;
     overflow: hidden;
   }
 
@@ -728,6 +738,18 @@ button:disabled {
     height: 100%;
     object-fit: contain;
     margin: 0 auto;
+  }
+
+  .choices {
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .choice-btn,
+  button {
+    min-height: 54px;
+    padding: 10px 14px;
+    font-size: 1rem;
   }
 }
 
